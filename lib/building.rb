@@ -18,16 +18,25 @@ class Building
 
   def renter_with_highest_rent
     occupied_units = @units.select do |unit|
-      unit.renter != nil
-    end
+        unit.renter != nil
+      end
     occupied_units.compact!
 
     highest_rent = occupied_units.max_by do |unit|
         unit.monthly_rent
-    end
-
+      end
 
     highest_rent.renter
   end
 
+  def annual_breakdown
+    annual_breakdown = {}
+    @units.each do |unit|
+      if unit.renter != nil
+      annual_breakdown[unit.renter.name] = (unit.monthly_rent * 12)
+      end
+    end
+
+    annual_breakdown
+  end
 end
